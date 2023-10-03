@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 
+//TO DO:
+// LoginForm.js: Replace the loginUser() functionality imported from the API file with the LOGIN_USER mutation functionality.
 import { loginUser } from '../utils/API';
 import Auth from '../utils/auth';
 
@@ -26,8 +28,6 @@ const LoginForm = () => {
     }
 
 
-    //TO DO:
-    // LoginForm.js: Replace the loginUser() functionality imported from the API file with the LOGIN_USER mutation functionality.
 
     try {
       const response = await loginUser(userFormData);
