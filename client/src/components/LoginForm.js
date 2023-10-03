@@ -25,6 +25,10 @@ const LoginForm = () => {
       event.stopPropagation();
     }
 
+
+    //TO DO:
+    // LoginForm.js: Replace the loginUser() functionality imported from the API file with the LOGIN_USER mutation functionality.
+
     try {
       const response = await loginUser(userFormData);
 
