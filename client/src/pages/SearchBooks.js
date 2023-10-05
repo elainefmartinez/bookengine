@@ -92,7 +92,7 @@ const SearchBooks = () => {
 
   return (
     <>
-      <div className='text-light bg-dark pt-5'>
+      <Jumbotron className='text-light bg-dark pt-5'>
         <Container>
           <h1>Search for Books!</h1>
           <Form onSubmit={handleFormSubmit}>
@@ -115,7 +115,7 @@ const SearchBooks = () => {
             </Row>
           </Form>
         </Container>
-      </div>
+      </Jumbotron>
 
       <Container>
         <h2 className='pt-5'>

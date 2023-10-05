@@ -6,8 +6,6 @@ const expiration = '2h';
 
 module.exports = {
   // function for our authenticated routes
-
-  //TO DO: auth.js: Update the auth middleware function to work with the GraphQL API.
   authMiddleware: function ({req}) {
     // allows token to be sent via  req.query or headers
     let token = req.query.token || req.headers.authorization;
