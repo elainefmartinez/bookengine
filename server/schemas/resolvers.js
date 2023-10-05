@@ -21,7 +21,7 @@ const resolvers = {
       let token = signToken(user);
       return { token, user };
     },
-    login: async (parent, { email, password }) => {
+    loginUser: async (parent, { email, password }) => {
       let user = await User.findOne({ email });
       if (!user) {
         throw AuthenticationError;
