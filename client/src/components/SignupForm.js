@@ -4,7 +4,6 @@ import {Form, Button, Alert } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../utils/mutation';
 
-// TO DO: SignupForm.js: Replace the addUser() functionality imported from the API file with the ADD_USER mutation functionality.
 import Auth from '../utils/auth';
 
 const SignupForm = () => {

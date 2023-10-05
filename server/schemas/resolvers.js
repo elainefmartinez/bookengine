@@ -1,6 +1,7 @@
 const { User } = require("../models");
+const {AuthenticationError} = require ("apollo-server-express"); 
 const { findByIdAndUpdate} = require("../models/User");
-const { signToken, AuthenticationError } = require("../utils/auth");
+const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
@@ -14,7 +15,7 @@ const resolvers = {
   },
 
   Mutation: {
-    createUser: async (parent, args) => {
+    addUser: async (parent, args) => {
       let user = await User.create(args);
       let token = signToken(user);
       return { token, user };
@@ -48,7 +49,7 @@ const resolvers = {
       throw AuthenticationError;
     },
 
-    deleteBook: async (parent, { bookId}, context) => {
+    removeBook: async (parent, { bookId}, context) => {
       if (context.user) {
         let modifiedUser = await findOneAndUpdate(
           { _id: context.user._id },
