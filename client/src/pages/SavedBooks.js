@@ -59,7 +59,7 @@ const SavedBooks = () => {
               }:`
             : "You have no saved books!"}
         </h2>
-        <CardColumns>
+        <Card>
           {userData.savedBooks.map((book) => {
             return (
               <Col md="4">
@@ -86,7 +86,7 @@ const SavedBooks = () => {
               </Col>
             );
           })}
-        </CardColumns>
+        </Card>
       </Container>
     </>
   );
