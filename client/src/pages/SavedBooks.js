@@ -1,10 +1,8 @@
 import React from "react";
 import {
-  Jumbotron,
   Container,
   Card,
   Button,
-  CardColumns,
   Col,
 } from "react-bootstrap";
 
