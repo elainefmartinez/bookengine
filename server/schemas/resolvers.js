@@ -1,37 +1,64 @@
-const { User } = require('../models');
+const { User } = require("../models");
+const { findByIdAndUpdate} = require("../models/User");
+const { signToken, AuthenticationError } = require("../utils/auth");
 
 const resolvers = {
   Query: {
-    me: async (parent, { userId }) => {
-      return User.findOne({ _id: userId });
+    me: async (parent, args, context) => {
+      if (context.user) {
+        return User.findOne({ _id: context.user._id }).select(
+          "-__v - password"
+        );
+      }
     },
   },
 
   Mutation: {
-    addUser: async (parent, { username }) => {
-      return User.create({ username });
+    createUser: async (parent, args) => {
+      let user = await User.create(args);
+      let token = signToken(user);
+      return { token, user };
     },
     login: async (parent, { email, password }) => {
-      return User.findOne(
-        { _id: userId },
-        {
-          $addToSet: { skills: skill },
-        },
-        {
-          new: true,
-          runValidators: true,
-        }
-      );
+      let user = await User.findOne({ email });
+      if (!user) {
+        throw AuthenticationError;
+      }
+
+      let passwordValid = await user.isCorrectPassword(password);
+
+      if (!passwordValid) {
+        throw AuthenticationError;
+      }
+
+      let token = signToken(user);
+      return { token, user };
     },
-    saveBook: async (parent, { bookArray }) => {
-      return User.findOneAndDelete({ _id: profileId });
+
+    saveBook: async (parent, { bookData }, context) => {
+      if (context.user) {
+        let modifiedUser = await findByIdAndUpdate(
+          { _id: context.user._id },
+          { $push: { savedBooks: bookData } },
+          { new: true }
+        );
+
+        return modifiedUser;
+      }
+      throw AuthenticationError;
     },
-    removeBook: async (parent, { userId}, context) => {
-      return User.findOneAndUpdate(
-        { _id: profileId },
-        { $pull: { skills: skill } },
-        { new: true }
-      );
+
+    deleteBook: async (parent, { bookId}, context) => {
+      if (context.user) {
+        let modifiedUser = await findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { savedBooks:{bookId}} },
+          { new: true }
+        );
+
+        return modifiedUser;
+      }
+      throw AuthenticationError;
     },
   },
 };
